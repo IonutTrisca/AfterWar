@@ -514,12 +514,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   ammo: 0
-  hasArmor: 0
   armor: 0
   hasWeapon: 0
   deaths: 0
   kills: 0
   score: 0
+  equippedWeapon: 0
 --- !u!114 &2240479549766367475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,7 +539,6 @@ MonoBehaviour:
   spineAngle: 0
   keysPressed: 
   isGrounded: 0
-  itemPrefab: {fileID: 4577246614396791804, guid: 751194dc492c0de4fa95915ca7a3cb61, type: 3}
 --- !u!114 &5052688149356605478
 MonoBehaviour:
   m_ObjectHideFlags: 0

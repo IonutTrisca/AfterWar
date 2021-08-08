@@ -18,7 +18,7 @@ public class ItemCollector : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Armor" && !stats.hasArmor)
         {
@@ -50,7 +50,7 @@ public class ItemCollector : MonoBehaviour
 
             Debug.Log("Player has collected a weapon!");
         }
-    }
+    }*/
 
     Transform RecursiveFindChild(Transform parent, string tag)
     {

@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public float health;
-    public float ammo;
+    public int magazine;
+    public int reserve;
 
-    public bool hasArmor;
     public float armor;
 
     public bool hasWeapon;
@@ -16,6 +16,7 @@ public class PlayerStats : MonoBehaviour
     public int kills;
     public int score;
 
+    public WeaponTypes equippedWeapon;
 
     // Start is called before the first frame update
     void Start()

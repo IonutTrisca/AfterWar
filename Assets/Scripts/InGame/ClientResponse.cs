@@ -32,15 +32,14 @@ public class ClientResponse : MonoBehaviour
         int deaths = packet.ReadInt();
         int score = packet.ReadInt();
         int kills = packet.ReadInt();
-        bool hasWeapon = packet.ReadBool();
+        WeaponTypes equippedWeapon = (WeaponTypes)packet.ReadInt();
         float health = packet.ReadFloat();
+        float armor = packet.ReadFloat();
         Debug.Log($"Spawning player {id} at position {position}");
         GameManager.instance.SpawnPlayer(id, username, position, rotation, deaths, score, kills);
-        if (hasWeapon)
-        {
-            GameManager.players[id].ItemPickedUp();
-            GameManager.players[id].SetHealth(health);
-        }
+        GameManager.players[id].EquipWeapon(equippedWeapon);
+        GameManager.players[id].stats.health = health;
+        GameManager.players[id].stats.armor = armor;
     }
 
     public static void PlayerMovement(Packet packet)
@@ -82,8 +81,9 @@ public class ClientResponse : MonoBehaviour
         int spawnerId = packet.ReadInt();
         Vector3 position = packet.ReadVector3();
         bool hasItem = packet.ReadBool();
+        WeaponTypes type = (WeaponTypes)packet.ReadInt();
 
-        GameManager.instance.CreateItemSpawner(spawnerId, hasItem, position);
+        GameManager.instance.CreateItemSpawner(spawnerId, hasItem, position, type);
     }
 
     public static void ItemSpawned(Packet packet)
@@ -98,7 +98,7 @@ public class ClientResponse : MonoBehaviour
         int byPlayer = packet.ReadInt();
 
         GameManager.spawners[spawnerId].ItemPickedUp();
-        GameManager.players[byPlayer].ItemPickedUp();
+        //GameManager.players[byPlayer].ItemPickedUp(spawnerId);
     }
 
     public static void PlayerHealth(Packet packet)
@@ -107,5 +107,66 @@ public class ClientResponse : MonoBehaviour
         float health = packet.ReadFloat();
 
         GameManager.players[id].SetHealth(health);
+    }
+
+    public static void PlayerArmor(Packet packet)
+    {
+        int id = packet.ReadInt();
+        float armor = packet.ReadFloat();
+
+        GameManager.players[id].stats.armor = armor;
+    }
+
+    public static void EquippedWeapon(Packet packet)
+    {
+        int id = packet.ReadInt();
+        WeaponTypes weaponType = (WeaponTypes)packet.ReadInt();
+        Debug.Log("EQUIPPING WEAPON");
+        GameManager.players[id].EquipWeapon(weaponType);
+    }
+
+    public static void UnEquippedWeapon(Packet packet)
+    {
+        int id = packet.ReadInt();
+        GameManager.players[id].UnEquipWeapon();
+    }
+
+    public static void PlayerAmmo(Packet packet)
+    {
+        int id = packet.ReadInt();
+        int magazine = packet.ReadInt();
+        int reserve = packet.ReadInt();
+
+        GameManager.players[id].stats.magazine = magazine;
+        GameManager.players[id].stats.reserve = reserve;
+    }
+
+    public static void PlayerWeapons(Packet packet)
+    {
+        List<WeaponTypes> weaponTypes = new List<WeaponTypes>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            weaponTypes.Add((WeaponTypes)packet.ReadInt());
+        }
+
+        HUDManager.instance.weapons = weaponTypes;
+    }
+
+    public static void PlayerEliminated(Packet packet)
+    {
+        int id = packet.ReadInt();
+
+        if (id == Client.instance.gameId)
+        {
+            GameManager.players[id].transform.root.position = new Vector3(-24.95462f, 48.28786f, 83.60689f);
+            GameManager.players[id].transform.root.rotation = Quaternion.Euler(41.288f, 149.268f, -0.003f);
+            HUDManager.instance.GameEnded();
+        }
+        else
+        {
+            Destroy(GameManager.players[id].gameObject);
+            GameManager.players.Remove(id);
+        }
     }
 }

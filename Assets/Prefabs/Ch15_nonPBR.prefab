@@ -445,6 +445,8 @@ GameObject:
   - component: {fileID: 2240479549766367465}
   - component: {fileID: 2240479549766367478}
   - component: {fileID: 2240479549766367475}
+  - component: {fileID: 3238366671752660135}
+  - component: {fileID: 5282692625722846950}
   m_Layer: 0
   m_Name: Ch15_nonPBR
   m_TagString: Player
@@ -538,6 +540,7 @@ MonoBehaviour:
   deaths: 0
   kills: 0
   score: 0
+  equippedWeapon: 0
 --- !u!114 &2240479549766367465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +576,7 @@ MonoBehaviour:
   sprintKey: 304
   groundDrag: 6
   airDrag: 2
+  rb: {fileID: 0}
   camTransform: {fileID: 2240479549437122140}
   spine: {fileID: 2240479549442481947}
   keysPressed: 
@@ -595,7 +599,30 @@ MonoBehaviour:
   spineAngle: 0
   keysPressed: 
   isGrounded: 0
-  itemPrefab: {fileID: 4577246614396791804, guid: 751194dc492c0de4fa95915ca7a3cb61, type: 3}
+--- !u!114 &3238366671752660135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429507597734726333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20c51d66e22d3148b9f4a564d500184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5282692625722846950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429507597734726333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a8bb84547223f4391d0e83f102b13d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921055601466925004
 GameObject:
   m_ObjectHideFlags: 0

@@ -61,7 +61,6 @@ public class TcpConnection
 
     private void ReceiveCallback(IAsyncResult result)
     {
-        Debug.Log("aasda");
         try
         {
             int byteLength = stream.EndRead(result);
@@ -74,7 +73,6 @@ public class TcpConnection
 
             byte[] data = new byte[byteLength];
             Array.Copy(receiveBuffer, data, byteLength);
-            Debug.Log(data[8]);
             receivedData.Reset(HandleData(data));
 
             stream.BeginRead(receiveBuffer, 0, bufferSize, ReceiveCallback, null);

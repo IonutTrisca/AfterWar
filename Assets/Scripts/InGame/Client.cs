@@ -31,7 +31,6 @@ public class Client : MonoBehaviour
         {
             instance = this;
             ConnectToGame();
-            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
@@ -69,6 +68,12 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.itemSpawned, ClientResponse.ItemSpawned},
             { (int)ServerPackets.itemPickedUp, ClientResponse.ItemPickedUp},
             { (int)ServerPackets.playerHealth, ClientResponse.PlayerHealth},
+            { (int)ServerPackets.equippedWeapon, ClientResponse.EquippedWeapon},
+            { (int)ServerPackets.unEquippedWeapon, ClientResponse.UnEquippedWeapon},
+            { (int)ServerPackets.playerArmor, ClientResponse.PlayerArmor},
+            { (int)ServerPackets.playerAmmo, ClientResponse.PlayerAmmo},
+            { (int)ServerPackets.playerWeapons, ClientResponse.PlayerWeapons},
+            { (int)ServerPackets.playerEliminated, ClientResponse.PlayerEliminated}
         };
 
         Debug.Log("Initialized packets.");

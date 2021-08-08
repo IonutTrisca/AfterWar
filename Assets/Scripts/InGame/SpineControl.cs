@@ -16,6 +16,9 @@ public class SpineControl : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if (Cursor.lockState == CursorLockMode.None)
+            return;
+
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY;

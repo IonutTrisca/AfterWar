@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Compass : MonoBehaviour
 {
     public RawImage compassImage;
-    public Transform player;
+    Transform player;
     public TMPro.TextMeshProUGUI compassDirection;
 
     // Start is called before the first frame update
@@ -26,6 +26,7 @@ public class Compass : MonoBehaviour
 		catch (Exception)
         {
 			Debug.LogError("Player Not Spawned Yet");
+			return;
         }
 
         compassImage.uvRect = new Rect(player.localEulerAngles.y / 360, 0, 1, 1);

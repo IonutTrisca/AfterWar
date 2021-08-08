@@ -84,4 +84,40 @@ class ClientSend
             SendUDPData(packet);
         }
     }
+
+    public static void EquipWeapon(int slot)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.equipWeapon))
+        {
+            packet.Write(slot);
+
+            SendGameServerTCPData(packet);
+        }
+    }
+
+    public static void WeaponDropped(WeaponTypes type)
+    { 
+        using (Packet packet = new Packet((int)ClientPackets.dropWeapon))
+        {
+            packet.Write((int)type);
+
+            SendGameServerTCPData(packet);
+        }
+    }
+
+    public static void Interact()
+    {
+        using (Packet packet = new Packet((int)ClientPackets.interact))
+        {
+            SendGameServerTCPData(packet);
+        }
+    }
+
+    public static void Reload()
+    {
+        using (Packet packet = new Packet((int)ClientPackets.reload))
+        {
+            SendGameServerTCPData(packet);
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class ThreadManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void FixedUpdate()

@@ -15,8 +15,6 @@ public class PlayerManager : MonoBehaviour
     public bool[] keysPressed;
     public bool isGrounded;
 
-    public GameObject itemPrefab;
-
     public void Initialize(int id, string username, int deaths, int kills, int score)
     {
         this.id = id;
@@ -51,40 +49,60 @@ public class PlayerManager : MonoBehaviour
             //remainingAmmo = remainingAmmo < 1 ? maxAmmo : remainingAmmo - 1;
     }
 
-    public void ItemPickedUp()
+    public void EquipWeapon(WeaponTypes type)
     {
+        if (type == WeaponTypes.NoWeapon)
+        {
+            UnEquipWeapon();
+            return;
+        }
+
+        Debug.Log("Weapon to equip " + (int)type);
+        GameObject prefab = GameManager.instance.weaponPrefabs[(int)type];
+        GameObject item = Instantiate(prefab, new Vector3(0.156f, 0.34f, 0.036f), Quaternion.Euler(0, 180, -90));
+
+        Transform holder = GetWeaponHolder();
+
+        UnEquipWeapon();
+
+        item.transform.parent = holder;
+        transform.root.GetComponent<PlayerStats>().equippedWeapon = type;
+
         if (id == Client.instance.gameId)
         {
-            Transform camera = RecursiveFindChild(transform.root, "MainCamera");
-
-            GameObject item = Instantiate(itemPrefab, new Vector3(0.156f, 0.34f, 0.036f), Quaternion.Euler(0, 180, -90));
-
-            item.transform.parent = camera;
-            item.transform.localPosition = new Vector3(0.32f, -0.48f, 0.67f);
-            item.transform.localRotation = Quaternion.Euler(-0.788f, 85.889f, -3.845f);
-            item.transform.GetComponent<MeshCollider>().enabled = false;
-            stats.hasWeapon = true;
-
-            Debug.Log("Player has collected a weapon!");
-        } 
+            item.transform.localPosition = GameManager.instance.weaponPosLocal[(int)type];
+            item.transform.localRotation = GameManager.instance.weaponRotLocal[(int)type];
+        }
         else
         {
-            Transform righthand = RecursiveFindChild(this.transform.root, "RightHand");
-
-            GameObject item = Instantiate(itemPrefab, new Vector3(0.156f, 0.34f, 0.036f), Quaternion.Euler(0, 180, -90));
-
-            item.transform.parent = righthand;
-            item.transform.localPosition = new Vector3(0.156f, 0.34f, 0.036f);
-            item.transform.localRotation = Quaternion.Euler(0, 180, -90);
-            item.transform.GetComponent<MeshCollider>().enabled = false;
-
-            stats.hasWeapon = true;
-
-            Debug.Log("Player has collected a weapon!");
+            item.transform.localPosition = GameManager.instance.weaponPosRemote[(int)type];
+            item.transform.localRotation = GameManager.instance.weaponRotRemote[(int)type];
         }
+
+
+        Debug.Log("Player has collected a weapon!");
     }
 
+    public void UnEquipWeapon()
+    {
+        Transform holder = GetWeaponHolder();
 
+        foreach (Transform child in holder.transform)
+        {
+            if (child.tag == "Weapon")
+                GameObject.Destroy(child.gameObject);
+        }
+
+        transform.root.GetComponent<PlayerStats>().equippedWeapon = WeaponTypes.NoWeapon;
+    }
+
+    private Transform GetWeaponHolder()
+    {
+        if (id == Client.instance.gameId)
+            return RecursiveFindChild(transform.root, "MainCamera");
+
+        return RecursiveFindChild(transform.root, "RightHand");
+    }
 
     Transform RecursiveFindChild(Transform parent, string tag)
     {

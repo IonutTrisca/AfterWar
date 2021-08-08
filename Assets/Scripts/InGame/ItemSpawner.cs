@@ -6,7 +6,9 @@ public class ItemSpawner : MonoBehaviour
 {
     public int spawnerId;
     public bool hasItem;
-    public MeshRenderer itemModel;
+    public GameObject itemModel;
+    public WeaponTypes type;
+
     private Vector3 position;
 
     public float itemRotationSpeed = 50f;
@@ -22,23 +24,24 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    public void Intitialize(int spawnerId, bool hasItem, Vector3 position)
+    public void Intitialize(int spawnerId, bool hasItem, Vector3 position, WeaponTypes type)
     {
         this.spawnerId = spawnerId;
-        itemModel.enabled = hasItem;
+        itemModel.SetActive(hasItem);
         this.hasItem = hasItem;
         this.position = position;
+        this.type = type;
     }
 
     public void ItemSpawned()
     {
         hasItem = true;
-        itemModel.enabled = true;
+        itemModel.SetActive(true);
     }
 
     public void ItemPickedUp()
     {
         hasItem = false;
-        itemModel.enabled = false;
+        itemModel.SetActive(false);
     }
 }

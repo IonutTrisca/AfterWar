@@ -87,7 +87,6 @@ public class UdpConnection
             using (Packet packet = new Packet(data))
             {
                 int packetId = packet.ReadInt();
-                Debug.Log(packetId);
                 Client.packetHandlers[packetId](packet); // Call appropriate method to handle the packet
             }
         });

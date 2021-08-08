@@ -6,8 +6,6 @@ public class UIAnimator : MonoBehaviour
 {
     public Animator blackBarsAnimator;
     public Animator titleCardAnimator;
-    public static bool keyHasBeenPressed = false;
-    public static bool animationFinished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +17,6 @@ public class UIAnimator : MonoBehaviour
     void Update()
     {
         if (Input.anyKey)
-        {
-            keyHasBeenPressed = true;
-        }
-
-        if (keyHasBeenPressed && animationFinished)
         {
             blackBarsAnimator.SetTrigger("HideBars");
             titleCardAnimator.SetTrigger("HideTitleCard");
